@@ -1,4 +1,5 @@
 def gcd(a,b):
+#sanity checks
 	if a<0:
 		raise ValueError
 	if b<0:

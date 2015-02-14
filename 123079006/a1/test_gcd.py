@@ -1,9 +1,11 @@
 from gcd import gcd
 
 def test_gcd():
+
+#basic tests
 	assert gcd(48, 72)==24 , "fails---gcd(48, 72) != 24"
 	assert gcd(12, 13)==1,"fails---gcd(12, 13)!=1"
-
+#ValueError tests
 	flag=0
 	try:
 		gcd(-1,5)
@@ -25,6 +27,7 @@ def test_gcd():
 		flag=1
 	assert flag==1,"ValueError not catched gcd(-10,-5)"
 
+#TypeError tests
 	flag=0
 	try:
 		gcd(1,0.5)
@@ -68,5 +71,7 @@ def test_gcd():
 	assert flag==1,"TypeError not catched gcd('sdfklaldf',5.0)"
 	
 	print "gcd() passed all tests!"
+
+#running test only if file ran as script 
 if __name__ == "__main__":
 	test_gcd()
