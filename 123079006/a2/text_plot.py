@@ -13,16 +13,10 @@ def init_blank_plot_with_axis(X_range,Y_range):
 	  |
 	  |
 	"""
-	if X_range%2 == 1:
-		blank_line=[' ']*(X_range/2)+['|']+[' ']*(X_range/2)+['\n']
-		blank_line_middle=['-']*(X_range/2)+['+']+['-']*(X_range/2)+['\n']
-	else:
-		blank_line=[' ']*((X_range-1)/2)+['|']+[' ']*(X_range/2)+['\n']
-		blank_line_middle=['-']*((X_range-1)/2)+['+']+['-']*(X_range/2)+['\n']	
-	if Y_range%2 == 1:
-		blank_plot_with_axis=blank_line*(Y_range/2)+blank_line_middle+blank_line*(Y_range/2)
-	else:
-		blank_plot_with_axis=blank_line*((Y_range-1)/2)+blank_line_middle+blank_line*(Y_range/2)
+	
+	blank_line=[' ']*((X_range-1)/2)+['|']+[' ']*(X_range/2)+['\n']
+	blank_line_middle=['-']*((X_range-1)/2)+['+']+['-']*(X_range/2)+['\n']	
+	blank_plot_with_axis=blank_line*((Y_range-1)/2)+blank_line_middle+blank_line*(Y_range/2)
 	return blank_plot_with_axis
 
 def autorange_data(x,y,X_range,Y_range):
@@ -107,10 +101,10 @@ def plot(x,y,X_range=80,Y_range=30):
 def print_sine():
 	x=[0]
 	y=[0]
-	for i in range(1,31):
-		x.append(x[i-1]+2*math.pi/30)
+	for i in range(1,21):
+		x.append(x[i-1]+2*math.pi/20)
 		y.append(math.sin(x[i]))
-	plot(x,y,121,31)
+	plot(x,y,80,30)
 
 if __name__=="__main__":
 	print_sine()
