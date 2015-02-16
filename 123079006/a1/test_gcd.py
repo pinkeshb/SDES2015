@@ -70,7 +70,7 @@ def test_gcd():
 		flag=1
 	assert flag==1,"TypeError not catched gcd('sdfklaldf',5.0)"
 	
-	print "gcd() passed all tests!"
+	print "All Izz Well!"
 
 #running test only if file ran as script 
 if __name__ == "__main__":
