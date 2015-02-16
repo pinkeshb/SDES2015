@@ -4,6 +4,8 @@ import filecmp
 
 def test_init_blank_plot_with_axis():
    assert text_plot.init_blank_plot_with_axis(80,30)==([' ']*39+['|']+[' ']*40+['\n'])*14  + (['-']*39+['+']+['-']*40+['\n']) +([' ']*39+['|']+[' ']*40+['\n'])*15,"init_blank_plot_with_axis(80,30) improper"
+   assert text_plot.init_blank_plot_with_axis(80,31)==([' ']*39+['|']+[' ']*40+['\n'])*15  + (['-']*39+['+']+['-']*40+['\n']) +([' ']*39+['|']+[' ']*40+['\n'])*15,"init_blank_plot_with_axis(80,31) improper"
+   assert text_plot.init_blank_plot_with_axis(81,30)==([' ']*40+['|']+[' ']*40+['\n'])*14  + (['-']*40+['+']+['-']*40+['\n']) +([' ']*40+['|']+[' ']*40+['\n'])*15,"init_blank_plot_with_axis(81,30) improper"
    assert text_plot.init_blank_plot_with_axis(121,31)==([' ']*60+['|']+[' ']*60+['\n'])*15  + (['-']*60+['+']+['-']*60+['\n']) +([' ']*60+['|']+[' ']*60+['\n'])*15,"init_blank_plot_with_axis(121,31) improper"
 
 def test_autorange_data():
