@@ -105,5 +105,7 @@ def test_text_plot():
    test_plot()
    print "All Izz Well!"
 
-test_text_plot()
+#running test only if file ran as script 
+if __name__ == "__main__":
+   test_text_plot()
 
