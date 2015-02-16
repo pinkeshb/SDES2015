@@ -14,9 +14,9 @@ def init_blank_plot_with_axis(X_range,Y_range):
 	  |
 	"""
 	
-	blank_line=[' ']*((X_range-1)/2)+['|']+[' ']*(X_range/2)+['\n']
-	blank_line_middle=['-']*((X_range-1)/2)+['+']+['-']*(X_range/2)+['\n']	
-	blank_plot_with_axis=blank_line*((Y_range-1)/2)+blank_line_middle+blank_line*(Y_range/2)
+	blank_line=[' ']*((X_range-1)/2)+['|']+[' ']*(X_range/2)+['\n'] #creates row_list = "         |           "
+	blank_line_middle=['-']*((X_range-1)/2)+['+']+['-']*(X_range/2)+['\n']	# creates middle_row_list = "----------+---------"
+	blank_plot_with_axis=blank_line*((Y_range-1)/2)+blank_line_middle+blank_line*(Y_range/2) # creates plot_list by stacking rows	   
 	return blank_plot_with_axis
 
 def autorange_data(x,y,X_range,Y_range):
@@ -28,25 +28,35 @@ def autorange_data(x,y,X_range,Y_range):
 	([3],[3])
 	"""
 	no_of_point=len(x)
+
 	if no_of_point==0:
 		return ([],[])
+	# find absolute max from both x and y
 	max_x=x[0]
 	max_y=y[0]
-	for i in range(0,no_of_point):
+	for i in range(1,no_of_point):
 		if max_x<abs(x[i]):
 			max_x=abs(x[i])
 		if max_y<abs(y[i]):
 			max_y=abs(y[i])
+
+	# if no data along x direction then no scaling in x direction
 	if max_x==0:
 		max_x=(X_range-1)/2
+	# if no data along y direction then no scaling in y direction
 	if max_y==0:
 		max_y=(Y_range-1)/2
+
+	# finding single scaling_factor to maintain aspect ratio of data
 	scaling_factor = 1.0/max([float(max_x)/((X_range-1)/2),float(max_y)/((Y_range-1)/2)])
+
+	#scaling the data
 	x_scaled=[]
 	y_scaled=[]
 	for i in range(0,no_of_point):
 		x_scaled.append(round(x[i]*scaling_factor))
 		y_scaled.append(round(y[i]*scaling_factor))
+
 	return (x_scaled,y_scaled)
 
 def rastering(x_scaled,y_scaled,X_range,Y_range,plot_list):
@@ -63,12 +73,16 @@ def rastering(x_scaled,y_scaled,X_range,Y_range,plot_list):
 	  |
 	"""
 	no_of_point=len(x_scaled)
+
 	if no_of_point==0:
 		return plot_list
+
+	# finding row number and column number form co-ordinates x,y and ploting it on plot_list
 	for i in range(0,no_of_point):
 		column=int(round(x_scaled[i]-1+(X_range+1)/2))
 		row=int(round(-y_scaled[i]-1+(Y_range+1)/2))
 		plot_list[row*(X_range+1)+column]='*'
+
 	return plot_list
 
 def plot(x,y,X_range=80,Y_range=30):
@@ -93,18 +107,29 @@ def plot(x,y,X_range=80,Y_range=30):
 	  |
 	  |
 	"""
+
+	#creating blank plot with axis
 	Blank_plot_with_axis=init_blank_plot_with_axis(X_range,Y_range)
+
+	#scaling the data acording to screen size
 	(x_scaled,y_scaled)=autorange_data(x,y,X_range,Y_range)
+
+	# rastering the scaled data on plot_list
 	plot_list=rastering(x_scaled,y_scaled,X_range,Y_range,Blank_plot_with_axis)
+
+	#converting and printing plot form list "plot_list"
 	print "".join(plot_list)
 
 def print_sine():
 	x=[0]
 	y=[0]
+
+	#ploting sine wave form 0 to 2pi with 21 discreate points on default screen size
 	for i in range(1,21):
 		x.append(x[i-1]+2*math.pi/20)
 		y.append(math.sin(x[i]))
 	plot(x,y,80,30)
 
+# plot sine wave only if the module is ran as script in python
 if __name__=="__main__":
 	print_sine()
