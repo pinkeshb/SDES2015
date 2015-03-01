@@ -1,10 +1,11 @@
 class Plot(object):
-	def __init__(self,size):
+	def __init__(self,size=(80,30)):
 		super(Plot, self).__init__()
 		self.size=size
-		self.plot_list=__init_blank_plot_with_axis__(self.size)
+		self.plot_list=[]
+		self.__init_blank_plot_with_axis__(self.size)
 
-	def __init_blank_plot_with_axis__(X_range,Y_range):
+	def __init_blank_plot_with_axis__(self,(X_range,Y_range)):
 		"""
 		init_blank_plot_with_axis(X_range,Y_range) -> List of string
 
@@ -21,23 +22,23 @@ class Plot(object):
 		blank_line=[' ']*((X_range-1)/2)+['|']+[' ']*(X_range/2)+['\n'] #creates row_list = "         |           "
 		blank_line_middle=['-']*((X_range-1)/2)+['+']+['-']*(X_range/2)+['\n']	# creates middle_row_list = "----------+---------"
 		blank_plot_with_axis=blank_line*((Y_range-1)/2)+blank_line_middle+blank_line*(Y_range/2) # creates plot_list by stacking rows	   
-		return blank_plot_with_axis
+		self.plot_list=blank_plot_with_axis
 
 	def rastering(self,points_object):
 		"""
 		rastering(self,points_object)
 
 		Plots data co-ordinates from points_object on plot_list. """
-		no_of_point=len(x_scaled)
+		no_of_point=len(points_object.pt_list_x)
 
 		if no_of_point==0:
 			return plot_list
 
 		# finding row number and column number form co-ordinates x,y and ploting it on plot_list
 		for i in range(0,no_of_point):
-			column=int(round(points_object.pt_list_x[i]-1+(X_range+1)/2))
-			row=int(round(-points_object.pt_list_y[i]-1+(Y_range+1)/2))
-			self.plot_list[row*(X_range+1)+column]='*'
+			column=int(round(points_object.pt_list_x[i]-1+(self.size[0]+1)/2))
+			row=int(round(-points_object.pt_list_y[i]-1+(self.size[1]+1)/2))
+			self.plot_list[row*(self.size[0]+1)+column]='*'
 	def __repr__(self):
 
 		return "".join(self.plot_list)
@@ -47,11 +48,11 @@ class Plot(object):
 class Points(object):
 	"""class holding Points of 2 dimensional plot with autorange feature to adapt data according to the plot size"""
 	def __init__(self, pt_list_x,pt_list_y):
-		super(points, self).__init__()
+		super(Points, self).__init__()
 		self.pt_list_x = pt_list_x
 		self.pt_list_y=pt_list_y
 
-	def autorange_data(self,X_range,Y_range):
+	def autorange_data(self,(X_range,Y_range)):
 		"""
 		autorange_data(X_range,Y_range)
 
@@ -84,10 +85,10 @@ class Points(object):
 		x_scaled=[]
 		y_scaled=[]
 		for i in range(0,no_of_point):
-			x_scaled.append(round(x[i]*scaling_factor))
-			y_scaled.append(round(y[i]*scaling_factor))
-		self.pt_list_X=x_scaled
-		self.pt_list_Y=y_scaled
+			x_scaled.append(round(self.pt_list_x[i]*scaling_factor))
+			y_scaled.append(round(self.pt_list_y[i]*scaling_factor))
+		self.pt_list_x=x_scaled
+		self.pt_list_y=y_scaled
 		return 
 def plot(x,y,X_range=80,Y_range=30):
 	"""
@@ -120,13 +121,14 @@ def plot(x,y,X_range=80,Y_range=30):
 	points=Points(x,y)
 
 	#scaling the data acording to screen size
-	points.autorange_data((X_range,Y_range))
+	points.autorange_data(plot.size)
 
 	plot.rastering(points)
-	
+
 	print plot
 	# # rastering the scaled data on plot_list
 	# plot_list=rastering(x_scaled,y_scaled,X_range,Y_range,Blank_plot_with_axis)
 
 	# #converting and printing plot form list "plot_list"
 	# print "".join(plot_list)
+# plot([0.5,-3.5,0,-3.8,2.1],[5,-1,0,+2.5,-1.9],50,55)
