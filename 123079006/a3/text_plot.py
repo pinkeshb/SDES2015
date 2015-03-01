@@ -38,6 +38,11 @@ class Plot(object):
 			column=int(round(points_object.pt_list_x[i]-1+(X_range+1)/2))
 			row=int(round(-points_object.pt_list_y[i]-1+(Y_range+1)/2))
 			self.plot_list[row*(X_range+1)+column]='*'
+	def __repr__(self):
+
+		return "".join(self.plot_list)
+
+
 
 class Points(object):
 	"""class holding Points of 2 dimensional plot with autorange feature to adapt data according to the plot size"""
@@ -108,17 +113,20 @@ def plot(x,y,X_range=80,Y_range=30):
 	"""
 
 	#creating instance of plot class with required size
-	p=plot((X_range,Y_range))
+	plot=Plot((X_range,Y_range))
 
 	#creating instance of points initiated with points
 
-	data=
+	points=Points(x,y)
 
 	#scaling the data acording to screen size
-	p.
+	points.autorange_data((X_range,Y_range))
 
-	# rastering the scaled data on plot_list
-	plot_list=rastering(x_scaled,y_scaled,X_range,Y_range,Blank_plot_with_axis)
+	plot.rastering(points)
+	
+	print plot
+	# # rastering the scaled data on plot_list
+	# plot_list=rastering(x_scaled,y_scaled,X_range,Y_range,Blank_plot_with_axis)
 
-	#converting and printing plot form list "plot_list"
-	print "".join(plot_list)
+	# #converting and printing plot form list "plot_list"
+	# print "".join(plot_list)
