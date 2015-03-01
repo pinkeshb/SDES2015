@@ -39,3 +39,49 @@ class plot(object):
 			row=int(round(-points_object.pt_list_y[i]-1+(Y_range+1)/2))
 			self.plot_list[row*(X_range+1)+column]='*'
 
+class points(object):
+	"""class holding points of 2 dimensional plot with autorange feature to adapt data according to the plot size"""
+	def __init__(self, pt_list_x,pt_list_y):
+		super(points, self).__init__()
+		self.pt_list_x = pt_list_x
+		self.pt_list_y=pt_list_y
+
+	def autorange_data(self,X_range,Y_range):
+		"""
+		autorange_data(X_range,Y_range)
+
+		set  scaled x & y list so as to cover the entire plot(X_range,Y_range).
+		"""
+		no_of_point=len(self.pt_list_x)
+
+		if no_of_point==0:
+			return 
+		# find absolute max from both x and y
+		max_x=self.pt_list_x[0]
+		max_y=self.pt_list_y[0]
+		for i in range(1,no_of_point):
+			if max_x<abs(self.pt_list_x[i]):
+				max_x=abs(self.pt_list_x[i])
+			if max_y<abs(self.pt_list_y[i]):
+				max_y=abs(self.pt_list_y[i])
+
+		# if no data along x direction then no scaling in x direction
+		if max_x==0:
+			max_x=(X_range-1)/2
+		# if no data along y direction then no scaling in y direction
+		if max_y==0:
+			max_y=(Y_range-1)/2
+
+		# finding single scaling_factor to maintain aspect ratio of data
+		scaling_factor = 1.0/max([float(max_x)/((X_range-1)/2),float(max_y)/((Y_range-1)/2)])
+
+		#scaling the data
+		x_scaled=[]
+		y_scaled=[]
+		for i in range(0,no_of_point):
+			x_scaled.append(round(x[i]*scaling_factor))
+			y_scaled.append(round(y[i]*scaling_factor))
+		self.pt_list_X=x_scaled
+		self.pt_list_Y=y_scaled
+		return 
+		
