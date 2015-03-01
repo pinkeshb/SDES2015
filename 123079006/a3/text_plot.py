@@ -1,6 +1,6 @@
-class plot(object):
-	def __init__(self,size=(80,30)):
-		super(plot, self).__init__()
+class Plot(object):
+	def __init__(self,size):
+		super(Plot, self).__init__()
 		self.size=size
 		self.plot_list=__init_blank_plot_with_axis__(self.size)
 
@@ -39,8 +39,8 @@ class plot(object):
 			row=int(round(-points_object.pt_list_y[i]-1+(Y_range+1)/2))
 			self.plot_list[row*(X_range+1)+column]='*'
 
-class points(object):
-	"""class holding points of 2 dimensional plot with autorange feature to adapt data according to the plot size"""
+class Points(object):
+	"""class holding Points of 2 dimensional plot with autorange feature to adapt data according to the plot size"""
 	def __init__(self, pt_list_x,pt_list_y):
 		super(points, self).__init__()
 		self.pt_list_x = pt_list_x
@@ -84,4 +84,41 @@ class points(object):
 		self.pt_list_X=x_scaled
 		self.pt_list_Y=y_scaled
 		return 
-		
+def plot(x,y,X_range=80,Y_range=30):
+	"""
+	plot(x,y,X_range=80,Y_range=30) -> noneType
+
+	Given two lists/tuples of floating point values x and y "plot(x, y)" produces a text-based scatter plot.
+	That is, for each pair,	(x_i, y_i), it writes a "*" to the screen.
+
+	screen has a default size of 30 rows by 80 columns (like your terminal window).
+	This size is settable by the user to change the dimensions if needed but the default is 30x80. 
+	The origin of plot is at (X_range+1)/2 and (Y_range+1)/2
+
+	The range of the plot is automatically set to cover the entire plot.
+
+	When text_plot.py is run as "python text_plot.py" it will show a sine plot (from 0 to 2*pi) as output.
+
+	e.g.
+	plot([2],[1],5,4)
+	  | *
+	--+--
+	  |
+	  |
+	"""
+
+	#creating instance of plot class with required size
+	p=plot((X_range,Y_range))
+
+	#creating instance of points initiated with points
+
+	data=
+
+	#scaling the data acording to screen size
+	p.
+
+	# rastering the scaled data on plot_list
+	plot_list=rastering(x_scaled,y_scaled,X_range,Y_range,Blank_plot_with_axis)
+
+	#converting and printing plot form list "plot_list"
+	print "".join(plot_list)
